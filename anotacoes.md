@@ -16,7 +16,7 @@
 
 - CNNs
 
-## datase
+## dataset
 
 1. LIDC
 2. LUNA16
