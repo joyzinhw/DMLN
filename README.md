@@ -1,4 +1,6 @@
-## APLICAÇÃO DE CNNs NA CLASSIFICAÇÃO DO CARCINOMA PULMONAR DE CÉLULAS NÃO PEQUENASrequisitos
+## APLICAÇÃO DE CNNs NA CLASSIFICAÇÃO DO CARCINOMA PULMONAR DE CÉLULAS NÃO PEQUENAS
+
+requisitos
 
 * python (version 3.13.0 or later)
 * [dataset dividido em treino e teste](https://drive.google.com/drive/folders/1bAshdY1GdLHfQswjQnLCSHxjEIaQXX7Q?usp=drive_link)
