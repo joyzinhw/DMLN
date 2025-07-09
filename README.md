@@ -24,7 +24,7 @@ Objetivos Especificos
 ## MOTIVAÇÃO
 
 
-Câncer pulmonar de células não pequenas (CPCNP), responsável por cerca de 85% dos casos.
+Câncer pulmonar de células não pequenas (CPCNP), responsável por cerca de 85% dos casos de cancer.
 
 - Neste segundo grupo estão incluídos os subtipos adenocarcinoma, carcinoma de células escamosas e carcinoma de grandes células.
 - O principal fator de risco para o desenvolvimento desse tipo de tumor é o tabagismo, associado a cerca de 85% dos casos diagnosticados.
