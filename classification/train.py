@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sn
 
-from resnet50 import resnet50
+from Res2Net import Res2Net
+
 from train_utils import get_params_groups, create_lr_scheduler, train_one_epoch, evaluate
 from sklearn.metrics import confusion_matrix
 
@@ -38,8 +39,8 @@ def main(args):
     }
 
    
-    train_dir = os.path.join(args.data_path, "BMP_classification/", "train")
-    val_dir = os.path.join(args.data_path, "BMP_classification/", "test")
+    train_dir = os.path.join(args.data_path, "/home/joyzinhw/Documentos/DMLN/BMP_classification/", "train")
+    val_dir = os.path.join(args.data_path, "/home/joyzinhw/Documentos/DMLN/BMP_classification/", "test")
 
     if not os.path.isdir(train_dir):
         raise FileNotFoundError(f"Diretório de treino não encontrado: {train_dir}")
@@ -70,7 +71,7 @@ def main(args):
         num_workers=num_workers
     )
 
-    model = resnet50(num_classes=args.num_classes)
+    model = Res2Net(layers=[3, 4, 6, 3], num_classes=args.num_classes, width=16, scales=4, groups=1)
     model.to(device)
 
     pg = get_params_groups(model, weight_decay=args.wd)
@@ -126,7 +127,7 @@ def main(args):
         tb_writer.add_scalar(tags[6], val_kappa1, epoch)
 
         if best_acc < val_acc:
-            save_path = "classfication_result/cancer_resnet50.pth"
+            save_path = "/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_resnet50.pth"
             torch.save(model.state_dict(), save_path)
             print(f"Model saved to {save_path}")
 
@@ -138,7 +139,7 @@ def main(args):
 
             plt.figure()
             sn.heatmap(val_confmtpd, annot=True, cmap='Greens', fmt='d')
-            plt.savefig('classfication_result/cancer_resnet50_confusion_matrix.png')
+            plt.savefig('/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_resnet50_confusion_matrix.png')
 
 
             best_acc = val_acc
