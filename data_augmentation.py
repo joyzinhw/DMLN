@@ -6,44 +6,37 @@ import argparse
 
 
 def augment(sample, do_flip=False, do_rotate=False, angle=0):
-   
     if do_rotate:
         sample = rotate(sample, angle, axes=(0, 1), reshape=False)
     if do_flip:
-        
         sample = np.ascontiguousarray(sample[::-1, ::-1])
     return sample
 
 
 def process_directory(input_dir, output_dir):
-    
-    
     os.makedirs(output_dir, exist_ok=True)
 
-   
     for fname in os.listdir(input_dir):
         if not fname.lower().endswith('.bmp'):
             continue
         in_path = os.path.join(input_dir, fname)
-       
         imgs = imageio.imread(in_path)
         imgs = np.array(imgs)
 
-        # For each rotation (90° and 270°)
-        for i in range(2):
-            angle = i * 180 + 90
+        for angle in [180]:  # Altere para os ângulos que desejar (ex: [90, 180, 270])
             sample = augment(imgs, do_rotate=True, do_flip=False, angle=angle)
 
-            # If 2D image, save directly
+            # 2D image
             if sample.ndim == 2:
-                out_name = f"{i}rot_{fname}"
+                out_name = f"{angle}rot_{fname}"
                 out_path = os.path.join(output_dir, out_name)
                 imageio.imsave(out_path, sample.astype(np.uint8))
-            # If 3D stack, save each slice separately
+
+            # 3D image stack
             elif sample.ndim == 3:
                 for slice_idx in range(sample.shape[0]):
                     slice_img = sample[slice_idx]
-                    out_name = f"{i}rot_{slice_idx}_{fname}"
+                    out_name = f"{angle}rot_{slice_idx}_{fname}"
                     out_path = os.path.join(output_dir, out_name)
                     imageio.imsave(out_path, slice_img.astype(np.uint8))
 
@@ -62,18 +55,14 @@ def main(args):
         process_directory(class_input, class_output)
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Gera imagens rotacionadas (90° e 270°) preservando estrutura de pastas.')
+        description='Gera imagens rotacionadas preservando estrutura de pastas.')
     parser.add_argument('--data-path', type=str,
-                        default='image_hu',
+                        default='/home/joyzinhw/Documentos/DMLN/BMP_classification/train',
                         help='Caminho da pasta de entrada com subpastas de classes')
     parser.add_argument('--output-path', type=str,
                         default='augment_img_rotate',
                         help='Caminho da pasta de saída onde serão criadas subpastas')
     opt = parser.parse_args()
     main(opt)
-
-
-

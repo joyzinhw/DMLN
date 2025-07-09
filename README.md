@@ -23,7 +23,6 @@ Objetivos Especificos
 
 ## MOTIVAÇÃO
 
-
 Câncer pulmonar de células não pequenas (CPCNP), responsável por cerca de 85% dos casos de cancer.
 
 - Neste segundo grupo estão incluídos os subtipos adenocarcinoma, carcinoma de células escamosas e carcinoma de grandes células.

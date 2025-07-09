@@ -9,6 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sn
+from collections import Counter
 
 from Res2Net import Res2Net
 
@@ -39,8 +40,9 @@ def main(args):
     }
 
    
-    train_dir = os.path.join(args.data_path, "/home/joyzinhw/Documentos/DMLN/BMP_classification/", "train")
-    val_dir = os.path.join(args.data_path, "/home/joyzinhw/Documentos/DMLN/BMP_classification/", "test")
+    train_dir = os.path.join("/home/joyzinhw/Documentos/DMLN/dataset-balanceado/train")
+    val_dir = os.path.join("/home/joyzinhw/Documentos/DMLN/dataset-balanceado/test")
+
 
     if not os.path.isdir(train_dir):
         raise FileNotFoundError(f"Diretório de treino não encontrado: {train_dir}")
@@ -54,6 +56,11 @@ def main(args):
     batch_size = args.batch_size
     num_workers = 8
     print(f'Using {num_workers} dataloader workers every process')
+    
+    print("Train class distribution:", Counter([s[1] for s in train_dataset.samples]))
+    print("Val class distribution:", Counter([s[1] for s in val_dataset.samples]))
+
+
 
     train_loader = torch.utils.data.DataLoader(
         train_dataset,
@@ -127,7 +134,7 @@ def main(args):
         tb_writer.add_scalar(tags[6], val_kappa1, epoch)
 
         if best_acc < val_acc:
-            save_path = "/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_resnet50.pth"
+            save_path = "/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_res2net.pth"
             torch.save(model.state_dict(), save_path)
             print(f"Model saved to {save_path}")
 
@@ -139,7 +146,7 @@ def main(args):
 
             plt.figure()
             sn.heatmap(val_confmtpd, annot=True, cmap='Greens', fmt='d')
-            plt.savefig('/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_resnet50_confusion_matrix.png')
+            plt.savefig('/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_res2net_confusion_matrix.png')
 
 
             best_acc = val_acc
