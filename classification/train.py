@@ -66,7 +66,7 @@ def main(args):
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        pin_memory=True,
+        pin_memory=False,
         num_workers=num_workers
     )
 
@@ -74,7 +74,7 @@ def main(args):
         val_dataset,
         batch_size=batch_size,
         shuffle=False,
-        pin_memory=True,
+        pin_memory=False,
         num_workers=num_workers
     )
 

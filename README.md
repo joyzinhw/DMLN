@@ -3,6 +3,7 @@
 requisitos
 
 * python (version 3.13.0 or later)
+* [dataset balanceado]()
 * [dataset dividido em treino e teste](https://drive.google.com/drive/folders/1bAshdY1GdLHfQswjQnLCSHxjEIaQXX7Q?usp=drive_link)
 * [dataset divido por categoria + cvs com dados do dataset](https://drive.google.com/file/d/1Tryg4cN30dSADB6r-yJrz-2TpBZJvpFD/view?usp=sharing)
 * ```
