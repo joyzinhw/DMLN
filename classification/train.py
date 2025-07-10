@@ -13,15 +13,19 @@ from collections import Counter
 
 from Res2Net import Res2Net
 
-from train_utils import get_params_groups, create_lr_scheduler, train_one_epoch, evaluate
+from train_utils import get_params_groups, create_lr_scheduler, train_one_epoch, evaluate 
+import gc 
+gc.collect()
+torch.cuda.empty_cache()
+
 from sklearn.metrics import confusion_matrix
 
 
 def main(args):
-    os.environ["CUDA_VISIBLE_DEVICES"] = '1'
+    os.environ["CUDA_VISIBLE_DEVICES"] = '0'
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
-    tb_writer = SummaryWriter()
+    tb_writer = SummaryWriter(log_dir="/home/joyzinhw/Documentos/DMLN/tensorboard_logs")
 
     data_transform = {
         "train": transforms.Compose([
@@ -54,7 +58,7 @@ def main(args):
 
     train_num = len(train_dataset)
     batch_size = args.batch_size
-    num_workers = 8
+    num_workers = 2
     print(f'Using {num_workers} dataloader workers every process')
     
     print("Train class distribution:", Counter([s[1] for s in train_dataset.samples]))
@@ -112,7 +116,10 @@ def main(args):
             print(f"Confusion matrix with pandas:\n{confmtpd}")
             plt.figure()
             sn.heatmap(confmtpd, annot=True, cmap='Greens', fmt='d')
+            plt.tight_layout()
             plt.show()
+            plt.close()
+
 
             best_train_acc = train_acc
 
@@ -146,7 +153,10 @@ def main(args):
 
             plt.figure()
             sn.heatmap(val_confmtpd, annot=True, cmap='Greens', fmt='d')
+            plt.tight_layout()  # opcional, mas melhora layout
             plt.savefig('/home/joyzinhw/Documentos/DMLN/classfication_result/cancer_res2net_confusion_matrix.png')
+            plt.close()
+
 
 
             best_acc = val_acc
